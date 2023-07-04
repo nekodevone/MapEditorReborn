@@ -209,10 +209,10 @@ namespace MapEditorReborn
         public override string Name => "MapEditorReborn";
 
         /// <inheritdoc/>
-        public override string Author => "Michal78900";
+        public override string Author => "Michal78900 | Edit jaskill";
 
         /// <inheritdoc/>
-        public override Version Version { get; } = new (3, 0, 1);
+        public override Version Version { get; } = new (3, 0, 2);
 
         /// <inheritdoc/>
         public override Version RequiredExiledVersion { get; } = new (7, 1, 0);
