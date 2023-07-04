@@ -98,10 +98,18 @@ namespace MapEditorReborn.Events.Handlers.Internal
         internal static void OnRoundStarted() => AutoLoadMaps(Config.LoadMapOnEvent.OnRoundStarted);
 
         /// <inheritdoc cref="Exiled.Events.Handlers.Map.OnDecontaminating"/>
-        internal static void OnDecontaminating(DecontaminatingEventArgs _) => AutoLoadMaps(Config.LoadMapOnEvent.OnDecontaminating);
+        internal static void OnDecontaminating(DecontaminatingEventArgs _)
+        {
+            UnloadMaps(true);
+            AutoLoadMaps(Config.LoadMapOnEvent.OnDecontaminating);
+        }
 
         /// <inheritdoc cref="Exiled.Events.Handlers.Warhead.OnDetonated()"/>
-        internal static void OnWarheadDetonated() => AutoLoadMaps(Config.LoadMapOnEvent.OnWarheadDetonated);
+        internal static void OnWarheadDetonated()
+        {
+            UnloadMaps(false);
+            AutoLoadMaps(Config.LoadMapOnEvent.OnWarheadDetonated);
+        }
 
         internal static void OnShootingDoor(ShootingEventArgs ev)
         {
@@ -275,5 +283,20 @@ namespace MapEditorReborn.Events.Handlers.Internal
         }
 
         private static readonly Config Config = MapEditorReborn.Singleton.Config;
+
+        private static void UnloadMaps(bool isDecontaminating)
+        {
+            var zone = isDecontaminating
+                ? ZoneType.LightContainment
+                : ZoneType.LightContainment | ZoneType.HeavyContainment | ZoneType.Entrance;
+
+            foreach (var mapEditorObject in SpawnedObjects)
+            {
+                if (zone.HasFlag(mapEditorObject.CurrentRoom.Zone))
+                {
+                    mapEditorObject.Destroy();
+                }
+            }
+        }
     }
 }
