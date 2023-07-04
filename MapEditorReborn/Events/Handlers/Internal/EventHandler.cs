@@ -292,9 +292,21 @@ namespace MapEditorReborn.Events.Handlers.Internal
 
             foreach (var mapEditorObject in SpawnedObjects)
             {
-                if (zone.HasFlag(mapEditorObject.CurrentRoom.Zone))
+                // Необходимо обратить первый раз, чтобы currentRoom не был null
+                var roomType = mapEditorObject.RoomType;
+
+                if (!zone.HasFlag(mapEditorObject.CurrentRoom.Zone))
+                {
+                    continue;
+                }
+
+                try
                 {
                     mapEditorObject.Destroy();
+                }
+                catch (Exception)
+                {
+                    // Игнорируем ошибку
                 }
             }
         }
