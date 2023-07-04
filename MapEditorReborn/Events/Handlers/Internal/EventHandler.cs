@@ -290,7 +290,7 @@ namespace MapEditorReborn.Events.Handlers.Internal
                 ? ZoneType.LightContainment
                 : ZoneType.LightContainment | ZoneType.HeavyContainment | ZoneType.Entrance;
 
-            foreach (var mapEditorObject in SpawnedObjects)
+            foreach (var mapEditorObject in SpawnedObjects.ToList())
             {
                 // Необходимо обратить первый раз, чтобы currentRoom не был null
                 var roomType = mapEditorObject.RoomType;
@@ -308,6 +308,8 @@ namespace MapEditorReborn.Events.Handlers.Internal
                 {
                     // Игнорируем ошибку
                 }
+
+                SpawnedObjects.Remove(mapEditorObject);
             }
         }
     }
