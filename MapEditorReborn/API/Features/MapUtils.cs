@@ -82,9 +82,9 @@ namespace MapEditorReborn.API.Features
                         // Ignored
                     }
                 }
-            }
 
-            SpawnedObjects.Clear();
+                SpawnedObjects.Clear();
+            }
 
             Log.Debug("Destroyed all map's GameObjects and indicators.");
 
