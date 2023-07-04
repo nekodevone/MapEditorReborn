@@ -69,15 +69,18 @@ namespace MapEditorReborn.API.Features
 
             Log.Debug(map is not null ? "Trying to load the map..." : "Trying to unload the map..");
 
-            foreach (MapEditorObject mapEditorObject in SpawnedObjects)
+            if (map is null)
             {
-                try
+                foreach (MapEditorObject mapEditorObject in SpawnedObjects)
                 {
-                    mapEditorObject.Destroy();
-                }
-                catch (Exception)
-                {
-                    // Ignored
+                    try
+                    {
+                        mapEditorObject.Destroy();
+                    }
+                    catch (Exception)
+                    {
+                        // Ignored
+                    }
                 }
             }
 
