@@ -113,6 +113,11 @@ namespace MapEditorReborn.Events.Handlers.Internal
 
         internal static void OnShootingDoor(ShootingEventArgs ev)
         {
+            if (ev.Player.CurrentItem is null)
+            {
+                return;
+            }
+
             Vector3 forward = ev.Player.CameraTransform.forward;
             Vector3 position = ev.Player.CameraTransform.position;
             Firearm firearm = ((Exiled.API.Features.Items.Firearm)ev.Player.CurrentItem).Base;
