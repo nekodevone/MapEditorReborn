@@ -5,6 +5,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using MonoMod.Utils;
+
 namespace MapEditorReborn.API.Features
 {
     using System;
@@ -84,6 +86,9 @@ namespace MapEditorReborn.API.Features
                 }
 
                 SpawnedObjects.Clear();
+
+                // Remove custom properties from vanilla doors
+                VanillaDoorObject.UnSetAllDoors();
             }
 
             Log.Debug("Destroyed all map's GameObjects and indicators.");
@@ -94,9 +99,6 @@ namespace MapEditorReborn.API.Features
             // This is to remove selected object hint.
             foreach (Player player in Player.List)
                 ToolGunHandler.SelectObject(player, null);
-
-            // Remove custom properties from vanilla doors
-            VanillaDoorObject.UnSetAllDoors();
 
             // Unregister vanilla tesla events
             VanillaTeslaHandler.UnRegisterEvents();
@@ -477,6 +479,7 @@ namespace MapEditorReborn.API.Features
                 outputMap.Teleports.AddRange(map.Teleports);
                 outputMap.Lockers.AddRange(map.Lockers);
                 outputMap.Schematics.AddRange(map.Schematics);
+                outputMap.VanillaDoors.AddRange(map.VanillaDoors);
             }
 
             return outputMap;
