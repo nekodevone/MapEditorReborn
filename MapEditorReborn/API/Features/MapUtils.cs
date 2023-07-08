@@ -479,7 +479,18 @@ namespace MapEditorReborn.API.Features
                 outputMap.Teleports.AddRange(map.Teleports);
                 outputMap.Lockers.AddRange(map.Lockers);
                 outputMap.Schematics.AddRange(map.Schematics);
-                outputMap.VanillaDoors.AddRange(map.VanillaDoors);
+
+                foreach (var door in map.VanillaDoors)
+                {
+                    // Если другая карта уже добавила доступ к двери, то перезаписываем
+                    if (outputMap.VanillaDoors.ContainsKey(door.Key))
+                    {
+                        outputMap.VanillaDoors[door.Key] = door.Value;
+                        continue;
+                    }
+
+                    outputMap.VanillaDoors.Add(door.Key, door.Value);
+                }
             }
 
             return outputMap;
