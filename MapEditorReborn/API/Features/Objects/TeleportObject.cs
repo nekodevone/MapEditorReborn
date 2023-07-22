@@ -15,6 +15,7 @@ namespace MapEditorReborn.API.Features.Objects
     using Events.Handlers;
     using Exiled.API.Extensions;
     using Exiled.API.Features;
+    using Exiled.API.Features.Roles;
     using Extensions;
     using MEC;
     using Mirror;
@@ -171,6 +172,9 @@ namespace MapEditorReborn.API.Features.Objects
 
             Player player = Player.Get(gameObject);
             if (player is not null && !Base.AllowedRoles.Contains(player.Role.Type.ToString()))
+                return;
+
+            if (player is not null && player.Role.As<FpcRole>().ActiveTime.TotalMilliseconds < 250)
                 return;
 
             int choosenTeleporter = Choose(Base.TargetTeleporters);
