@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Exiled.API.Features;
 using UnityEngine;
 
 namespace MapEditorReborn
@@ -21,11 +23,21 @@ namespace MapEditorReborn
         /// <param name="gameObject">Объект</param>
         public static void AddToWhiteList(GameObject gameObject)
         {
-            WhiteList.Add(gameObject);
-
-            foreach (var child in gameObject.GetComponentsInChildren<Component>())
+            try
             {
-                WhiteList.Add(child.gameObject);
+                WhiteList.Add(gameObject);
+
+                foreach (var child in gameObject.GetComponentsInChildren<Component>())
+                {
+                    if (child.gameObject != null)
+                    {
+                        WhiteList.Add(child.gameObject);
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                Log.Error(error);
             }
         }
     }
