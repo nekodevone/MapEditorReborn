@@ -27,7 +27,8 @@
                 _ => "red"
             };
 
-            response = $"<color={color}>{Server.Tps}/{ServerStatic.ServerTickrate}</color>";
+            response =
+                $"<color={color}>{Server.Tps}/{ServerStatic.ServerTickrate}</color>\nРазблокировано объектов: {Optimization.WhiteList.Count}";
             return true;
         }
     }

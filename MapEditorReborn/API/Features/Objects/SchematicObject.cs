@@ -415,7 +415,10 @@ namespace MapEditorReborn.API.Features.Objects
         private void AddAnimators()
         {
             foreach (KeyValuePair<GameObject, RuntimeAnimatorController> pair in _animators)
+            {
                 pair.Key.AddComponent<Animator>().runtimeAnimatorController = pair.Value;
+                Optimization.AddToWhiteList(pair.Key);
+            }
 
             _animators = null;
             AssetBundle.UnloadAllAssetBundles(false);
@@ -497,6 +500,8 @@ namespace MapEditorReborn.API.Features.Objects
                 rigidbody.useGravity = dict.Value.UseGravity;
                 rigidbody.constraints = dict.Value.Constraints;
                 rigidbody.mass = dict.Value.Mass;
+                
+                Optimization.AddToWhiteList(rigidbody.gameObject);
             }
         }
 
