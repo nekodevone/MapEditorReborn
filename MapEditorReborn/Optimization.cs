@@ -29,7 +29,7 @@ namespace MapEditorReborn
 
                 foreach (var child in gameObject.GetComponentsInChildren<Component>())
                 {
-                    if (child.gameObject != null)
+                    if (child is { gameObject: not null })
                     {
                         WhiteList.Add(child.gameObject);
                     }
