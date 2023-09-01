@@ -5,10 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+
 namespace MapEditorReborn.API.Features.Objects
 {
     using Exiled.API.Enums;
-    using Exiled.API.Features;
+    using Exiled.API.Features.Doors;
     using Extensions;
     using Interactables.Interobjects;
     using Interactables.Interobjects.DoorUtils;
@@ -35,7 +36,7 @@ namespace MapEditorReborn.API.Features.Objects
         public virtual DoorObject Init(DoorSerializable doorSerializable)
         {
             Base = doorSerializable;
-            Base.DoorType = Door.GetDoorType();
+            Base.DoorType = Door.Type;
             _prevType = Base.DoorType;
             _remainingHealth = Base.DoorHealth;
 
@@ -67,9 +68,14 @@ namespace MapEditorReborn.API.Features.Objects
             Door.IsOpen = Base.IsOpen;
             Door.ChangeLock(Base.IsLocked ? DoorLockType.SpecialDoorFeature : DoorLockType.None);
             Door.RequiredPermissions.RequiredPermissions = Base.KeycardPermissions;
-            Door.IgnoredDamageTypes = Base.IgnoredDamageSources;
-            Door.MaxHealth = Base.DoorHealth;
-            Door.Health = Base.DoorHealth;
+
+            if (Door is Exiled.API.Features.Doors.BreakableDoor breakableDoor)
+            {
+                breakableDoor.IgnoredDamage = Base.IgnoredDamageSources;
+                breakableDoor.MaxHealth = Base.DoorHealth;
+                breakableDoor.Health = Base.DoorHealth;
+            }
+            
             _remainingHealth = Base.DoorHealth;
 
             base.UpdateObject();
@@ -77,9 +83,9 @@ namespace MapEditorReborn.API.Features.Objects
 
         public void BreakDoor()
         {
-            if (Door.Base is BreakableDoor breakableDoor)
+            if (Door is Exiled.API.Features.Doors.BreakableDoor breakableDoor)
             {
-                breakableDoor.Network_destroyed = true;
+                breakableDoor.IsDestroyed = true;
                 return;
             }
 

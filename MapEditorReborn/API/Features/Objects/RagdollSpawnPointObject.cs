@@ -5,6 +5,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+
 namespace MapEditorReborn.API.Features.Objects
 {
     using System.Collections.Generic;
@@ -63,9 +65,12 @@ namespace MapEditorReborn.API.Features.Objects
                 ragdollInfo = new RagdollData(Server.Host.ReferenceHub, new UniversalDamageHandler(-1f, DeathTranslations.TranslationsById[deathReasonId]), Base.RoleType, transform.position, transform.rotation, Base.Name, double.MaxValue);
             else
                 ragdollInfo = new RagdollData(Server.Host.ReferenceHub, new CustomReasonDamageHandler(Base.DeathReason), Base.RoleType, transform.position, transform.rotation, Base.Name, double.MaxValue);
-            
 
-            AttachedRagdoll = Ragdoll.Create(ragdollInfo);
+
+            if (!Ragdoll.TryCreate(ragdollInfo, out AttachedRagdoll))
+            {
+                throw new Exception("Failed to create ragdoll");
+            }
         }
 
         private void OnDestroy()

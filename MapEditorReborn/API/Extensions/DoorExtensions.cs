@@ -18,13 +18,6 @@ namespace MapEditorReborn.API.Extensions
     public static class DoorExtensions
     {
         /// <summary>
-        /// Gets the <see cref="DoorType"/> given a specified <see cref="Door"/>.
-        /// </summary>
-        /// <param name="door">The <see cref="Door"/> to check.</param>
-        /// <returns>The corresponding <see cref="DoorType"/> of the specified <see cref="Door"/>.</returns>
-        public static DoorType GetDoorType(this Door door) => door.GameObject.name.GetDoorTypeByName();
-
-        /// <summary>
         /// Gets the <see cref="DoorType"/> given a specified name.
         /// </summary>
         /// <param name="name">The name to check."/>.</param>

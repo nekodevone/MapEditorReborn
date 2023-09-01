@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+
 namespace MapEditorReborn.Events.Handlers
 {
     using EventArgs;
-    using Exiled.Events.Extensions;
-    using static Exiled.Events.Events;
+    using Exiled.Events.Features;
 
     /// <summary>
     /// Teleport related events.
@@ -19,12 +19,15 @@ namespace MapEditorReborn.Events.Handlers
         /// <summary>
         /// Invoked before teleporting.
         /// </summary>
-        public static event CustomEventHandler<TeleportingEventArgs> Teleporting;
+        public static Event<TeleportingEventArgs> Teleporting { get; set; } = new();
 
         /// <summary>
         /// Called before teleporting.
         /// </summary>
         /// <param name="ev">The <see cref="TeleportingEventArgs"/> instance.</param>
-        internal static void OnTeleporting(TeleportingEventArgs ev) => Teleporting.InvokeSafely(ev);
+        internal static void OnTeleporting(TeleportingEventArgs ev)
+        {
+            Teleporting.InvokeSafely(ev);
+        }
     }
 }
